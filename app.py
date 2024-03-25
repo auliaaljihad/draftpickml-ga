@@ -120,12 +120,12 @@ data=pd.read_csv('dataset/dataset.csv')
 hero_data = data.to_dict(orient='index')
 hero_data_clean = data.to_dict(orient='index')
 
-st.title('Genetic Algorithm MLBB for Team Composition')
+st.title('Genetic Algorithm MLBB for Draft Pick Mythic Rank')
 st.write('Presented by:')
 st.write(
-'Aulia Al-Jihad Safhadi,',
-'Naafi Rofiiqoh Makaarimah, ',
-'M. Shafri Syamsuddin')
+'Aulia Al-Jihad Safhadi, ',
+'M. Shafri Syamsuddin, ',
+'Naafi Rofiiqoh Makaarimah')
 
 st.subheader('Dataframe')
 st.dataframe(data, use_container_width=True)
