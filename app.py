@@ -181,7 +181,7 @@ pick_kawan_nama = st.multiselect(
      'Ruby', 'Saber', 'Selena', 'Silvanna', 'Sun', 'Terizla', 'Thamuz', 'Tigreal', 'Uranus', 'Vale', 
      'Valentina', 'Valir', 'Vexana', 'Wanwan', 'X.Borg', 'Xavier', 'Yi Sun-shin', 'Yin', 'Yu Zhong', 
      'Yve', 'Zhask', 'Zilong'],
-    ['Alice', 'Kimmy']
+    ['Akai', 'Martis', 'Aurora']
     # []
     )
 pick_kawan = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_kawan_nama]
@@ -212,7 +212,7 @@ pick_musuh_nama = st.multiselect(
      'Ruby', 'Saber', 'Selena', 'Silvanna', 'Sun', 'Terizla', 'Thamuz', 'Tigreal', 'Uranus', 'Vale', 
      'Valentina', 'Valir', 'Vexana', 'Wanwan', 'X.Borg', 'Xavier', 'Yi Sun-shin', 'Yin', 'Yu Zhong', 
      'Yve', 'Zhask', 'Zilong'],
-    ['Zhask', 'Gatotkaca']
+    ['Lancelot', 'Yu Zhong', 'Brody', 'Tigreal']
     # []
     )
 pick_musuh = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_musuh_nama]
