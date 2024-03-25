@@ -5,13 +5,14 @@ import random
 import pandas as pd
 import numpy as np
 from collections import defaultdict
+import streamlit.components.v1 as components
 
 def calculate_fitness(individual, pick_kawan, pick_musuh):
     fitness_value = 0
     count = 0
     hero_1 = "kosong"
     for index in individual:
-        if count == 1:
+        if count == 0:
             if hero_1 != index:
                 hero_1 = index
 
@@ -126,6 +127,9 @@ st.write(
 'Aulia Al-Jihad Safhadi, ',
 'M. Shafri Syamsuddin, ',
 'Naafi Rofiiqoh Makaarimah')
+
+st.title('🎈 Presentation Deck')
+components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSe1PgrGeOWIH6RU-kp6OmGSa59hAiW-9kz5YZWAhvh_p_yT_TEZ53k1rUh5vNKI8UXXhEtFS8eoAlO/embed?start=false&loop=false&delayms=3000", height=570)
 
 st.subheader('Dataframe')
 st.dataframe(data, use_container_width=True)
@@ -246,11 +250,11 @@ total = total_win_rate
 
 chart_data = pd.DataFrame({
     "Generations": list(range(1, len(temp_result)+1)),
-    "Komposisi": (temp_result) 
+    "Fitness": (temp_result) 
 })
 
 st.subheader('Fitness Value')
-st.line_chart(chart_data, x='Generations', y=["Komposisi"], color=["#dc143c"], width=0, height=0, use_container_width=True)
+st.line_chart(chart_data, x='Generations', y=["Fitness"], color=["#dc143c"], width=0, height=0, use_container_width=True)
 
 col1 = st.columns(1)
 st.subheader("Rekomenasi pick selanjutnya:")
@@ -261,7 +265,7 @@ hasil = []
 for i in result:
     hasil.append(result_df.iloc[i])
 
-st.dataframe(hasil)
+st.dataframe(hasil, width=0, height=0, use_container_width=True)
 fitness_tf = ((temp_result[-1]))
 st.write(f"Fitness score: {fitness_tf:.2f}")
 
