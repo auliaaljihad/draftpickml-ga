@@ -8,17 +8,23 @@ def calculate_fitness(individual, pick_kawan, pick_musuh):
     # print(individual)
     fitness_value = 0
     count = 0
+    hero_1 = "kosong"
     for index in individual:
         # print("Hero Random: ")
         # print(hero_data_clean[index]['Hero'])
+        if count == 1:
+            if hero_1 != index:
+                hero_1 = index
 
         sinergis = 0
         counter = 0
 
         for kawan in pick_kawan_nama:
             sinergis = sinergis + hero_data_clean[index]['s_' + str(kawan)]
+        if count == 1:
+            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[hero_1]['Hero'])]
         for musuh in pick_musuh_nama:
-            counter = counter + hero_data_clean[index]['s_' + str(musuh)]
+            counter = counter + hero_data_clean[index]['c_' + str(musuh)]
 
         # print("Total Sinergis hero: "+ str(sinergis))
         # print("Total Counter hero: "+ str(counter))
@@ -49,7 +55,8 @@ def tournament_selection(population, fitness_values, tournament_size):
 def crossover(parent1, parent2):
     # print("hahaha")
     # print(len(parent1))
-    crossover_point = random.randint(0, len(parent1) - 1)
+    # crossover_point = random.randint(0, len(parent1) - 1)
+    crossover_point = 1
     # print(crossover_point)
     # print("Parent 1: " + str(parent1))
     # print("Parent 2: " + str(parent2))
@@ -180,7 +187,7 @@ def genetic_algorithm(population, hero_data, generations, tournament_size, cross
     return best_individual, temp_result
 
 
-data=pd.read_csv('dataset/coba2.csv')
+data=pd.read_csv('dataset/dataset.csv')
 hero_data = data.to_dict(orient='index')
 hero_data_clean = data.to_dict(orient='index')
 
@@ -275,7 +282,7 @@ print(result)
 # Plot fitness progress for both strategies on the same graph
 # print(total)
 # print(temp_result)
-plt.plot((temp_result / total) * 100, label="Komposisi")
+plt.plot(temp_result, label="Komposisi")
 # plt.plot(temp_result * 100, label="Komposisi")
 
 plt.title("Fitness Progress")

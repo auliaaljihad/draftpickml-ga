@@ -9,15 +9,21 @@ from collections import defaultdict
 def calculate_fitness(individual, pick_kawan, pick_musuh):
     fitness_value = 0
     count = 0
+    hero_1 = "kosong"
     for index in individual:
+        if count == 1:
+            if hero_1 != index:
+                hero_1 = index
 
         sinergis = 0
         counter = 0
 
         for kawan in pick_kawan_nama:
             sinergis = sinergis + hero_data_clean[index]['s_' + str(kawan)]
+        if count == 1:
+            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[hero_1]['Hero'])]
         for musuh in pick_musuh_nama:
-            counter = counter + hero_data_clean[index]['s_' + str(musuh)]
+            counter = counter + hero_data_clean[index]['c_' + str(musuh)]
         count += 1
 
         fitness_value += ((sinergis + counter) + 1) * (hero_data_clean[index]['win_rate'] + hero_data_clean[index]['ban_rate'] + hero_data_clean[index]['pick_rate'])
@@ -33,9 +39,8 @@ def tournament_selection(population, fitness_values, tournament_size):
     return selected_parents
 
 def crossover(parent1, parent2):
-    # print("hahaha")
-    # print(len(parent1))
-    crossover_point = random.randint(0, len(parent1) - 1)
+    # crossover_point = random.randint(0, len(parent1) - 1)
+    crossover_point = 1
     child1 = parent1[:crossover_point] + parent2[crossover_point:]
     child2 = parent2[:crossover_point] + parent1[crossover_point:]
     return child1, child2
@@ -111,7 +116,7 @@ st.set_page_config(
     layout="centered", 
     )
 
-data=pd.read_csv('dataset/coba2.csv')
+data=pd.read_csv('dataset/dataset.csv')
 hero_data = data.to_dict(orient='index')
 hero_data_clean = data.to_dict(orient='index')
 
@@ -241,7 +246,7 @@ total = total_win_rate
 
 chart_data = pd.DataFrame({
     "Generations": list(range(1, len(temp_result)+1)),
-    "Komposisi": (temp_result / total) * 100
+    "Komposisi": (temp_result) 
 })
 
 st.subheader('Fitness Value')
@@ -257,8 +262,8 @@ for i in result:
     hasil.append(result_df.iloc[i])
 
 st.dataframe(hasil)
-fitness_tf = ((temp_result[-1] / total) * 100)
-st.write(f"Fitness: {fitness_tf:.2f}%")
+fitness_tf = ((temp_result[-1]))
+st.write(f"Fitness score: {fitness_tf:.2f}")
 
 # st.write("Individu Terbaik:")
 # for hero in result:
