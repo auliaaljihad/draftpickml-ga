@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # streamlit_app.py
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -121,30 +120,6 @@ st.set_page_config(
 data=pd.read_csv('dataset/dataset.csv')
 hero_data = data.to_dict(orient='index')
 hero_data_clean = data.to_dict(orient='index')
-
-st.title('Genetic Algorithm MLBB for Draft Pick Mythic Rank')
-=======
-import streamlit as st
-
-st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
-)
-
-st.write("# Welcome to Our Project! 👋")
-
-st.sidebar.success("Select a demo above.")
-
->>>>>>> 20c4327 (Menambahkan fitur baru dan mengedit beberapa file)
-st.write('Presented by:')
-st.write(
-'Aulia Al-Jihad Safhadi, ',
-'M. Shafri Syamsuddin, ',
-<<<<<<< HEAD
-'Naafi Rofiiqoh Makaarimah')
-
-st.title('🎈 Presentation Deck')
-components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSe1PgrGeOWIH6RU-kp6OmGSa59hAiW-9kz5YZWAhvh_p_yT_TEZ53k1rUh5vNKI8UXXhEtFS8eoAlO/embed?start=false&loop=false&delayms=3000", height=570)
 
 st.subheader('Dataframe')
 st.dataframe(data, use_container_width=True)
@@ -289,6 +264,3 @@ st.write(f"Fitness score: {fitness_tf:.2f}")
 #     st.write(f"Name: {hero_data_clean[hero]['Hero']}")
 
 # st.write(result)
-=======
-'Naafi Rofiiqoh Makaarimah')
->>>>>>> 20c4327 (Menambahkan fitur baru dan mengedit beberapa file)

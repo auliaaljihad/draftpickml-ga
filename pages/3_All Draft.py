@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # streamlit_app.py
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -20,13 +19,10 @@ def calculate_fitness(individual, pick_kawan, pick_musuh):
         sinergis = 0
         counter = 0
 
-        for kawan in pick_kawan_nama:
-            sinergis = sinergis + hero_data_clean[index]['s_' + str(kawan)]
-        if count == 1:
-            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[hero_1]['Hero'])]
-        for musuh in pick_musuh_nama:
-            counter = counter + hero_data_clean[index]['c_' + str(musuh)]
-        count += 1
+        for hit in individual:
+            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[index]['Hero'])]
+        # sinergis = 0
+        counter = 0
 
         fitness_value += ((sinergis + counter) + 1) * (hero_data_clean[index]['win_rate'] + hero_data_clean[index]['ban_rate'] + hero_data_clean[index]['pick_rate'])
     return fitness_value
@@ -42,7 +38,7 @@ def tournament_selection(population, fitness_values, tournament_size):
 
 def crossover(parent1, parent2):
     # crossover_point = random.randint(0, len(parent1) - 1)
-    crossover_point = 1
+    crossover_point = random.randint(0, len(parent1) - 1)
     child1 = parent1[:crossover_point] + parent2[crossover_point:]
     child2 = parent2[:crossover_point] + parent1[crossover_point:]
     return child1, child2
@@ -53,11 +49,12 @@ def mutate(individual, hero_data, mutation_rate):
             new_hero_index = random.choice(list(hero_data_clean.keys()))
             individual[i] = new_hero_index
 
-    if len(individual) == 2:
-        while individual[0] == individual[1]:
+    if len(individual) == 5:
+        while individual[0] == individual[1] or individual[0] == individual[2] or individual[0] == individual[3] or individual[0] == individual[4] or individual[1] == individual[2] or individual[1] == individual[3] or individual[1] == individual[4] or individual[2] == individual[3] or individual[2] == individual[4] or individual[3] == individual[4]:
             random_hero = random.randint(0,1)
             new_hero_index = random.choice(list(hero_data_clean.keys()))
             individual[random_hero] = new_hero_index
+
     return individual
 
 def genetic_algorithm(population, hero_data, generations, tournament_size, crossover_rate, mutation_rate, pop_size, pick_kawan, pick_musuh):
@@ -122,30 +119,6 @@ data=pd.read_csv('dataset/dataset.csv')
 hero_data = data.to_dict(orient='index')
 hero_data_clean = data.to_dict(orient='index')
 
-st.title('Genetic Algorithm MLBB for Draft Pick Mythic Rank')
-=======
-import streamlit as st
-
-st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
-)
-
-st.write("# Welcome to Our Project! 👋")
-
-st.sidebar.success("Select a demo above.")
-
->>>>>>> 20c4327 (Menambahkan fitur baru dan mengedit beberapa file)
-st.write('Presented by:')
-st.write(
-'Aulia Al-Jihad Safhadi, ',
-'M. Shafri Syamsuddin, ',
-<<<<<<< HEAD
-'Naafi Rofiiqoh Makaarimah')
-
-st.title('🎈 Presentation Deck')
-components.iframe("https://docs.google.com/presentation/d/e/2PACX-1vSe1PgrGeOWIH6RU-kp6OmGSa59hAiW-9kz5YZWAhvh_p_yT_TEZ53k1rUh5vNKI8UXXhEtFS8eoAlO/embed?start=false&loop=false&delayms=3000", height=570)
-
 st.subheader('Dataframe')
 st.dataframe(data, use_container_width=True)
 
@@ -181,78 +154,20 @@ for index in ban_hero:
     else:
         print('gagal')
 
-pick_kawan_nama = st.multiselect(
-    'Masukan hero teman',
-    ['Aamon', 'Akai', 'Aldous', 'Alice', 'Alpha', 'Alucard', 
-     'Angela', 'Argus', 'Arlott', 'Atlas', 'Aulus', 'Aurora', 
-     'Badang', 'Balmond', 'Bane', 'Barats', 'Baxia', 'Beatrix', 
-     'Belerick', 'Benedetta', 'Brody', 'Bruno', 'Carmilla', 'Cecilion', 
-     'Chang’e', 'Chou', 'Cici', 'Claude', 'Clint', 'Cyclops', 'Diggie', 
-     'Dyrroth', 'Edith', 'Esmeralda', 'Estes', 'Eudora', 'Fanny', 'Faramis', 
-     'Floryn', 'Franco', 'Fredrinn', 'Freya', 'Gatotkaca', 'Gloo', 'Gord', 
-     'Granger', 'Grock', 'Guinevere', 'Gusion', 'Hanabi', 'Hanzo', 'Harith', 
-     'Harley', 'Hayabusa', 'Helcurt', 'Hilda', 'Hylos', 'Irithel', 'Ixia', 
-     'Jawhead', 'Johnson', 'Joy', 'Julian', 'Kadita', 'Kagura', 'Kaja', 'Karina', 
-     'Karrie', 'Khaleed', 'Khufra', 'Kimmy', 'Lancelot', 'Lapu-Lapu', 'Layla', 'Leomord', 
-     'Lesley', 'Ling', 'Lolita', 'Lunox', 'Luo Yi', 'Lylia', 'Martis', 'Masha', 'Mathilda', 
-     'Melissa', 'Minotaur', 'Minsitthar', 'Miya', 'Moskov', 'Nana', 'Natalia', 'Natan', 'Nolan', 
-     'Novaria', 'Odette', 'Paquito', 'Pharsa', 'Phoveus', 'Popol and Kupa', 'Rafaela', 'Roger', 
-     'Ruby', 'Saber', 'Selena', 'Silvanna', 'Sun', 'Terizla', 'Thamuz', 'Tigreal', 'Uranus', 'Vale', 
-     'Valentina', 'Valir', 'Vexana', 'Wanwan', 'X.Borg', 'Xavier', 'Yi Sun-shin', 'Yin', 'Yu Zhong', 
-     'Yve', 'Zhask', 'Zilong'],
-    ['Akai', 'Martis', 'Aurora']
-    # []
-    )
-pick_kawan = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_kawan_nama]
-
-for index in pick_kawan:
-    if index in hero_data_clean:
-        del hero_data_clean[index]
-        # print("Entri telah dihapus.".format(index_to_delete))
-    else:
-        print('gagal')
-
-pick_musuh_nama = st.multiselect(
-    'Masukan hero musuh',
-    ['Aamon', 'Akai', 'Aldous', 'Alice', 'Alpha', 'Alucard', 
-     'Angela', 'Argus', 'Arlott', 'Atlas', 'Aulus', 'Aurora', 
-     'Badang', 'Balmond', 'Bane', 'Barats', 'Baxia', 'Beatrix', 
-     'Belerick', 'Benedetta', 'Brody', 'Bruno', 'Carmilla', 'Cecilion', 
-     'Chang’e', 'Chou', 'Cici', 'Claude', 'Clint', 'Cyclops', 'Diggie', 
-     'Dyrroth', 'Edith', 'Esmeralda', 'Estes', 'Eudora', 'Fanny', 'Faramis', 
-     'Floryn', 'Franco', 'Fredrinn', 'Freya', 'Gatotkaca', 'Gloo', 'Gord', 
-     'Granger', 'Grock', 'Guinevere', 'Gusion', 'Hanabi', 'Hanzo', 'Harith', 
-     'Harley', 'Hayabusa', 'Helcurt', 'Hilda', 'Hylos', 'Irithel', 'Ixia', 
-     'Jawhead', 'Johnson', 'Joy', 'Julian', 'Kadita', 'Kagura', 'Kaja', 'Karina', 
-     'Karrie', 'Khaleed', 'Khufra', 'Kimmy', 'Lancelot', 'Lapu-Lapu', 'Layla', 'Leomord', 
-     'Lesley', 'Ling', 'Lolita', 'Lunox', 'Luo Yi', 'Lylia', 'Martis', 'Masha', 'Mathilda', 
-     'Melissa', 'Minotaur', 'Minsitthar', 'Miya', 'Moskov', 'Nana', 'Natalia', 'Natan', 'Nolan', 
-     'Novaria', 'Odette', 'Paquito', 'Pharsa', 'Phoveus', 'Popol and Kupa', 'Rafaela', 'Roger', 
-     'Ruby', 'Saber', 'Selena', 'Silvanna', 'Sun', 'Terizla', 'Thamuz', 'Tigreal', 'Uranus', 'Vale', 
-     'Valentina', 'Valir', 'Vexana', 'Wanwan', 'X.Borg', 'Xavier', 'Yi Sun-shin', 'Yin', 'Yu Zhong', 
-     'Yve', 'Zhask', 'Zilong'],
-    ['Lancelot', 'Yu Zhong', 'Brody', 'Tigreal']
-    # []
-    )
-pick_musuh = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_musuh_nama]
-
-for index in pick_musuh:
-    if index in hero_data_clean:
-        del hero_data_clean[index]
-        # print("Entri telah dihapus.".format(index_to_delete))
-    else:
-        print('gagal')
-
-jumlah_pick = st.number_input('Jumlah Pick', min_value=1, value=2, max_value=2)
-
 # Initialize input
-pop_size = st.number_input('Ukuran Populasi', min_value=1, value=10)
-population = [random.sample(list(hero_data_clean.keys())[:-1], jumlah_pick) for _ in range(pop_size)]
+pop_size = st.number_input('Ukuran Populasi', min_value=1, value=3)
+population = [random.sample(list(hero_data_clean.keys())[:-1], 5) for _ in range(pop_size)]
 
-generations = st.number_input('Jumlah Generasi', min_value=1, value=30)
+generations = st.number_input('Jumlah Generasi', min_value=1, value=15)
 tournament_size = st.number_input('Tournament Size', min_value=1, value=3)
 crossover_rate = st.number_input('Crossover Rate', value=0.8, max_value=1.00)
 mutation_rate = st.number_input('Mutation Rate', value=0.10, max_value=1.00)
+
+pick_kawan_nama = []
+pick_kawan = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_kawan_nama]
+
+pick_musuh_nama = []
+pick_musuh = [index for index, hero in hero_data_clean.items() if hero['Hero'] in pick_musuh_nama]
 
 # Run genetic algorithm
 result, temp_result = genetic_algorithm(population, hero_data_clean, generations, tournament_size, crossover_rate, mutation_rate, pop_size, pick_kawan, pick_musuh)
@@ -283,12 +198,3 @@ for i in result:
 st.dataframe(hasil, width=0, height=0, use_container_width=True)
 fitness_tf = ((temp_result[-1]))
 st.write(f"Fitness score: {fitness_tf:.2f}")
-
-# st.write("Individu Terbaik:")
-# for hero in result:
-#     st.write(f"Name: {hero_data_clean[hero]['Hero']}")
-
-# st.write(result)
-=======
-'Naafi Rofiiqoh Makaarimah')
->>>>>>> 20c4327 (Menambahkan fitur baru dan mengedit beberapa file)
