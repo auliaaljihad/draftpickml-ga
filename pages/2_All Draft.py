@@ -20,7 +20,7 @@ def calculate_fitness(individual, pick_kawan, pick_musuh):
         counter = 0
 
         for hit in individual:
-            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[index]['Hero'])]
+            sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[hit]['Hero'])]
         # sinergis = 0
         counter = 0
 
