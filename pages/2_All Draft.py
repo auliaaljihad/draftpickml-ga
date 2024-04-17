@@ -9,20 +9,11 @@ import streamlit.components.v1 as components
 
 def calculate_fitness(individual, pick_kawan, pick_musuh):
     fitness_value = 0
-    count = 0
-    hero_1 = "kosong"
     for index in individual:
-        if count == 0:
-            if hero_1 != index:
-                hero_1 = index
-
         sinergis = 0
         counter = 0
-
         for hit in individual:
             sinergis = sinergis + hero_data_clean[index]['s_' + str(hero_data_clean[hit]['Hero'])]
-        # sinergis = 0
-        counter = 0
 
         fitness_value += ((sinergis + counter) + 1) * (hero_data_clean[index]['win_rate'] + hero_data_clean[index]['ban_rate'] + hero_data_clean[index]['pick_rate'])
     return fitness_value
