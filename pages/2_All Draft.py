@@ -49,12 +49,33 @@ def mutate(individual, hero_data, mutation_rate):
             new_hero_index = random.choice(list(hero_data_clean.keys()))
             individual[i] = new_hero_index
 
-    if len(individual) == 5:
-        while individual[0] == individual[1] or individual[0] == individual[2] or individual[0] == individual[3] or individual[0] == individual[4] or individual[1] == individual[2] or individual[1] == individual[3] or individual[1] == individual[4] or individual[2] == individual[3] or individual[2] == individual[4] or individual[3] == individual[4]:
-            random_hero = random.randint(0,1)
-            new_hero_index = random.choice(list(hero_data_clean.keys()))
-            individual[random_hero] = new_hero_index
+    # if len(individual) == 5:
+    #     while individual[0] == individual[1] or individual[0] == individual[2] or individual[0] == individual[3] or individual[0] == individual[4] or individual[1] == individual[2] or individual[1] == individual[3] or individual[1] == individual[4] or individual[2] == individual[3] or individual[2] == individual[4] or individual[3] == individual[4]:
+    #         random_hero = random.randint(0,1)
+    #         new_hero_index = random.choice(list(hero_data_clean.keys()))
+    #         individual[random_hero] = new_hero_index
 
+    # newlist = [] # empty list to hold unique elements from the list
+    # index = [] # empty list to hold the duplicate index from the list
+    # count = 0
+    # for i in individual:
+    #     if i not in newlist:
+    #         newlist.append(i)
+    #     else:
+    #         new_hero_index = random.choice(list(hero_data_clean.keys()))
+    #         individual[count] = new_hero_index
+    #         # index.append(count)
+    #     count += 1
+    unique_heroes = []
+    count = 0
+    for i in individual:
+        while i in unique_heroes:
+            new_hero_index = random.choice(list(hero_data_clean.keys()))
+            individual[count] = new_hero_index
+        unique_heroes.append(individual[count])
+        count += 1
+
+    individual = unique_heroes
     return individual
 
 def genetic_algorithm(population, hero_data, generations, tournament_size, crossover_rate, mutation_rate, pop_size, pick_kawan, pick_musuh):
