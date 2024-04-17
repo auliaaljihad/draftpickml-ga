@@ -66,14 +66,12 @@ def mutate(individual, hero_data, mutation_rate):
     #         individual[count] = new_hero_index
     #         # index.append(count)
     #     count += 1
+
     unique_heroes = []
-    count = 0
-    for i in individual:
-        while i in unique_heroes:
-            new_hero_index = random.choice(list(hero_data_clean.keys()))
-            individual[count] = new_hero_index
-        unique_heroes.append(individual[count])
-        count += 1
+    for hero in individual:
+        while hero in unique_heroes:
+            hero = random.choice(list(hero_data_clean.keys()))
+        unique_heroes.append(hero)
 
     individual = unique_heroes
     return individual
@@ -208,7 +206,7 @@ st.subheader('Fitness Value')
 st.line_chart(chart_data, x='Generations', y=["Fitness"], color=["#dc143c"], width=0, height=0, use_container_width=True)
 
 col1 = st.columns(1)
-st.subheader("Rekomenasi pick selanjutnya:")
+st.subheader("Rekomenasi draft pick:")
 
 result_df = pd.DataFrame(data)
 result_df = result_df.drop(result_df.iloc[:, 1:247], axis=1)
